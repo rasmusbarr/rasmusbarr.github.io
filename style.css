@@ -1,0 +1,113 @@
+body {
+	font-family: "Open Sans", Arial, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 175%;
+	color: #555;
+	background-color: #fff;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+}
+
+a {
+	color: #443;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #000;
+}
+
+h1 {
+	color: #444;
+	font-size: 22px;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+h2 {
+	color: #444;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.postlink {
+	padding-top: 24px;
+}
+
+.date {
+	color: #777;
+}
+
+.figure {
+	padding-top: 16px;
+	padding-bottom: 16px;
+	text-align: center;
+}
+
+.fbox {
+	margin-bottom: 12px;
+	margin-left: 6px;
+	margin-right: 6px;
+	display: inline-block;
+	border: 1px solid #ddd;
+}
+
+.fcaption {
+	max-width: 600px;
+	margin: 0px auto;
+	text-align: center;
+	font-style: italic;
+}
+
+.comments {
+	border: 1px solid #ddd;
+	padding: 10px 14px 10px 14px;
+}
+
+.emph {
+	font-style: italic;
+}
+
+#top {
+	color: #ccc;
+	width: 100%;
+	margin: 0px auto;
+	text-align: center;
+	padding: 18px 0px 16px 0px;
+	background-color: #262626;
+}
+
+#title {
+	color: #fff;
+	padding-top: 16px;
+	padding-bottom: 8px;
+	margin: 0px;
+	font-size: 30px;
+}
+
+#subtitle {
+	margin: 0px 0px 20px 0px;
+}
+
+#menu a {
+	color: #ccc;
+	padding: 16px;
+}
+
+#menu a:hover {
+	color: #fff;
+}
+
+#content {
+	max-width: 800px;
+	margin: 0px auto;
+	text-align: left;
+	padding: 18px 16px 16px 16px;
+	background-color: #fff;
+}
+
+#content p a {
+	text-decoration: underline;
+}

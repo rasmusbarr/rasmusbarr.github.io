@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+	<title>Rasmus' website &amp; blog</title>
+	<link>http://rasmusbarr.github.io</link>
+	<atom:link href="http://rasmusbarr.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+	<lastBuildDate>Mon, 14 Jan 2016 17:00:00 +0100</lastBuildDate>
+	<pubDate>Mon, 14 Jan 2016 17:00:00 +0100</pubDate>
+	<item>
+		<title>Subpixel accurate GPU rendering of fonts using a glyph atlas</title>
+		<link>http://rasmusbarr.github.io/blog/subpixelglyph.html</link>
+		<guid>http://rasmusbarr.github.io/blog/subpixelglyph.html</guid>
+		<pubDate>Mon, 14 Jan 2016 17:00:00 +0100</pubDate>
+	</item>
+</channel>
+</rss>

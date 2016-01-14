@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta name="viewport" content="initial-scale=1.0"/>
+		<title>Rasmus' website &amp; blog: Home</title>
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600"/>
+		<link rel="stylesheet" type="text/css" href="/style.css"/>
+		<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/feed.xml"/>
+	</head>
+	<body>
+		<div id="top">
+			<div id="title">Rasmus' website &amp; blog</div>
+			<div id="subtitle">Mostly graphics and game development.</div>
+			<span id="menu">
+				<a href="/index.html">Home</a>
+				<a href="/allposts.html">All posts</a>
+				<a href="/about.html">About</a>
+				<a href="https://twitter.com/rasmusbarr" target="_blank">Follow (@rasmusbarr)</a>
+				<a href="http://rasmusbarr.github.io/feed.xml" title="RSS" target="_blank">RSS</a>
+			</span>
+		</div>
+		<div id="content">
+			<div class="post"><div class="date">JANUARY 14, 2016</div><a href="/blog/subpixelglyph.html"><h1>Subpixel accurate GPU rendering of fonts using a glyph atlas</h1></a><p>
+			This post introduces a simple way to achieve high-quality rendering of subpixel positioned glyphs without requiring a special pixel shader to perform fancy interpolation.
+			Note that this is about subpixel positioning, not <a href="https://en.wikipedia.org/wiki/Subpixel_rendering">subpixel rendering</a> (but the topics are somewhat related).
+		</p><p>
+			I'll start off with some background/motivation and end with a description of the technique.
+		</p><h2>Glyph atlas brief</h2><p>
+			Rendering glyphs from a glyph atlas is probably the most common way to render text in OpenGL and Direct3D.
+			Individual glyphs are rasterized into a <a href="https://en.wikipedia.org/wiki/Texture_atlas">texture atlas</a>, on-demand or in a preprocess, from a vector representation, such as a TrueType font.
+			To render text on the screen, each glyph is drawn as a screen-aligned quad using the graphics processor.
+		</p><p>
+			To achieve high-quality text rendering, the texels in the glyph atlas and pixels on the screen should align perfectly.
+			Misaligned glyphs will make text blurry, if filtering is active, or have an "uneven" appearance.
+			Glyphs are therefore typically rendered at whole pixels.
+			A result of rendering the string "aaaa" with this method is shown in Figure 1.
+		</p><div class="figure">
+			<img style="width: 100%; max-width: 722px" src="/images/subpixelglyph/a-snapped.png"/><div class="fcaption">Figure 1: Rendering "aaaa" using pixel-aligned glyphs from a glyph atlas. The grid indicates the pixels and the dot in the center of each pixel is the sample position that determines the pixel color.</div></div><h2>Why subpixel positioning?</h2><p>
+			The distance between glyphs in a word is called <span class="emph">glyph advances</span>.
+			Vector-based fonts have a resolution independent set of advances, meaning that a pixel-aligned position for each glyph can be a rather crude approximation of the intended layout, depending on how they are calculated.
+			One possibility, that would preserve the intended lengths of words, is to compute the location of each glyph in high precision and round to whole pixels.
+			This will unfortunately cause the text to have a jittery appearance with varying distances between the same set of glyphs.
+			The other option is to pixel align glyph advances, which results in good-looking and legible text.
+			However, the length error along the line is magnified with each added glyph (see Figure 2).
+		</p><div class="figure">
+			<div class="fbox">
+				<img src="/images/subpixelglyph/long-snapped.png" width="350" height="40"/><br/><img src="/images/subpixelglyph/long-subpixel.png" width="350" height="40"/></div><div class="fbox">
+				<img src="/images/subpixelglyph/i-snapped.png" width="350" height="40"/><br/><img src="/images/subpixelglyph/i-subpixel.png" width="350" height="40"/></div><div class="fcaption">Figure 2: Using pixel snapped advances (above in each box) or subpixel advances (below in each box) have great impact on the length of the text.</div></div><p>
+			The issue also comes up when an application targets multiple resolutions, zoom levels, and display densities, while wanting to maintain the same layout for text at all resolutions.
+		</p><p>
+		</p><h2>Subsampling a prefiltered representation</h2><p>
+			Because lines of text flow in the horizontal direction (<span class="emph">x</span>), the error doesn't accumulate in the vertical direction (<span class="emph">y</span>).
+			As a result, it is typically fine to round to pixels along <span class="emph">y</span>.
+			(Languages where the converse is true can of course simply swap the handling of the two coordinates. The technique can also be extended to both directions at the cost of memory and rasterization effort.)
+			Note that the rasterization phase is free to rasterize the glyph at any single subpixel <span class="emph">y</span>-location, such as aligned with the baseline of the font.
+			With this in mind, a method to render glyphs at subpixel positions along <span class="emph">x</span> is presented below.
+		</p><p>
+			The idea is to create a glyph atlas with multiple versions of each glyph (Figure 3).
+			Each version represents a different subpixel offset.
+			We will stick to four subpixel versions here which will allow each glyph pixel to be packed into 32 bits (four 8-bit alpha texels).
+			The texels are arranged in interleaved form (Figure 4).
+		</p><div class="figure">
+			<img style="width: 100%; max-width: 768px" src="/images/subpixelglyph/atlas-row.png"/><br/><div class="fcaption">Figure 3: An "a" rendered at 4 subpixel positions, 1/4 of a pixel apart.</div></div><div class="figure">
+			<img style="width: 100%; max-width: 768px" src="/images/subpixelglyph/atlas-interleaved.png"/><div class="fcaption">Figure 4: The versions of the "a" from Figure 3 have been interleaved along the <span class="emph">x</span>-direction.</div></div><p>
+			While it is intuitive to interleave four separately offset versions of a glyph, it is a relatively slow approach.
+			A faster method is to render the glyph scaled 4x along <span class="emph">x</span> and then apply a box filter in that direction with a kernel width of a whole pixel (four texels).
+		</p><p>
+			The glyph in Figure 4 represents a prefiltered representation of the glyph that we can subsample to achieve subpixel positioning.
+			We simply introduce four times the number of texels in each glyph quad and offset them by 3/8 pixel along <span class="emph">x</span> so the first texel is properly aligned with the sample center (see Figure 5).
+		</p><div class="figure">
+			<img style="width: 100%; max-width: 674px" src="/images/subpixelglyph/a-nearest.png"/><br/><div class="fcaption">Figure 5: Subsampling four times the pixels to achieve subpixel positioned glyphs.</div></div><p>
+			As of now, this approach provides four subpixel locations for each glyph.
+			The nice thing is that the approach works well with ordinary linear filtering (see Figure 6).
+		</p><div class="figure">
+			<img style="width: 100%; max-width: 674px" src="/images/subpixelglyph/a-linear.png"/><div class="fcaption">Figure 6: Same as Figure 5 but utilizing linear filtering to achieve interpolated subpixel locations.</div></div><p>
+			That's it.
+			You have already seen the final result in Figure 2.
+			I have successfully used this technique to render high-quality text with exactly the same layout at multiple resolutions in my secret project.
+			Make sure to keep a lookout for the next post if this first attempt of mine was interesting to you.
+		</p></div><div class="comments">You can't comment here - use twitter: <a href="http://twitter.com/home?status=%40rasmusbarr+%23subpixelglyph" target="_blank">#subpixelglyph</a>.</div>
+		</div>
+	</body>
+</html>
