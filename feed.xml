@@ -7,7 +7,7 @@
 	<lastBuildDate>Mon, 14 Jan 2016 17:00:00 +0100</lastBuildDate>
 	<pubDate>Mon, 14 Jan 2016 17:00:00 +0100</pubDate>
 	<item>
-		<title>Subpixel accurate GPU rendering of fonts using a glyph atlas</title>
+		<title>Subpixel accurate GPU rendering of text using a glyph atlas</title>
 		<link>http://rasmusbarr.github.io/blog/subpixelglyph.html</link>
 		<guid>http://rasmusbarr.github.io/blog/subpixelglyph.html</guid>
 		<pubDate>Mon, 14 Jan 2016 17:00:00 +0100</pubDate>
