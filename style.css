@@ -71,6 +71,13 @@ h2 {
 	font-style: italic;
 }
 
+.codeblock {
+	font-family: monospace;
+	padding: 0px;
+	margin: 0px;
+	margin-left: 2em;
+}
+
 #top {
 	color: #ccc;
 	width: 100%;
