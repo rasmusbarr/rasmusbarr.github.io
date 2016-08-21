@@ -4,8 +4,14 @@
 	<title>Rasmus' blog</title>
 	<link>http://rasmusbarr.github.io</link>
 	<atom:link href="http://rasmusbarr.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-	<lastBuildDate>Thu, 11 Aug 2016 20:00:00 +0100</lastBuildDate>
-	<pubDate>Thu, 11 Aug 2016 20:00:00 +0100</pubDate>
+	<lastBuildDate>Sun, 21 Aug 2016 20:00:00 +0100</lastBuildDate>
+	<pubDate>Sun, 21 Aug 2016 20:00:00 +0100</pubDate>
+	<item>
+		<title>Realtime global illumination (part 3)</title>
+		<link>http://rasmusbarr.github.io/blog/realtimegi-pt3.html</link>
+		<guid>http://rasmusbarr.github.io/blog/realtimegi-pt3.html</guid>
+		<pubDate>Sun, 21 Aug 2016 20:00:00 +0100</pubDate>
+	</item>
 	<item>
 		<title>Realtime global illumination (part 2)</title>
 		<link>http://rasmusbarr.github.io/blog/realtimegi-pt2.html</link>
