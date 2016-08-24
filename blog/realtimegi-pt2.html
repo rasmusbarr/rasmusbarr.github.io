@@ -148,9 +148,9 @@
 			While this removed the problem of estimating a filter radius, the expression still contains a singularity.
 			This time, however, there's a simple geometrical interpretation.
 			The cosine factor goes negative at the horizon of the hemisphere (which is incorrect).
-			We can fix that by adding an absolute value to cap it:
+			We can fix that by only considering positive values:
 		</p><div class="figure">
-			<img style="width: 100%; max-width: 461px" src="/images/realtimegi-pt2/rayf5.png" alt=""/></div><p>
+			<img style="width: 100%; max-width: 532px" src="/images/realtimegi-pt2/rayf5.png" alt=""/></div><p>
 			The downside is that we lose the closed-form expression.
 			One option is to construct a lookup table from this integral but I instead opted to find an approximate expression.
 			Let's find where the filter region just touches the border, which is the point where the error starts:
