@@ -261,7 +261,7 @@
 			Doing so is problematic, however, since loop iterations have dependencies.
 			For example, two subsequent contacts may refer to the same bodies which causes conflicts between SIMD lanes.
 			My approach to solving it is very simple.
-			The contact constraint setup is prefaced with a simple scheduling routine that reorders contacts to ensures that no conflicting contacts end up within a SIMD width.
+			The contact constraint setup is prefaced with a simple scheduling routine that reorders contacts to ensure that no conflicting contacts end up within a SIMD width.
 		</p><h2>Future work</h2><p>
 			The library is by no means finished.
 			Certain parts need more optimization effort.
