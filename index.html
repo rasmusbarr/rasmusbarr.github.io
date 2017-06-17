@@ -277,6 +277,10 @@
 			In theory, it would be simple to parallelize the collision routines and, given independent islands for constraint solving, so would updating the bodies.
 			The problem that remains to be solved relates to library design.
 			I would not want the physics library to allocate threads of its own, but rather expose some kind of job interface so it can be plugged in to an existing solution.
+		</p><p>
+			The order of contact constraint evaluation seems important for the stability of the simulation.
+			Currently, contacts are always evaluated in tag order, which is probably far from optimal.
+			I briefly tried to randomize the contact order which seems to give good behavior but more experiments and research are needed.
 		</p></div><div id="disqus_thread"></div>
 <script type="text/javascript">
 var disqus_config = function () {
