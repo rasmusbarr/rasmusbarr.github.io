@@ -4,8 +4,14 @@
 	<title>Rasmus' blog</title>
 	<link>http://rasmusbarr.github.io</link>
 	<atom:link href="http://rasmusbarr.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-	<lastBuildDate>Sun, 21 Aug 2016 20:00:00 +0100</lastBuildDate>
-	<pubDate>Sun, 21 Aug 2016 20:00:00 +0100</pubDate>
+	<lastBuildDate>Sat, 17 Jun 2017 23:30:00 +0100</lastBuildDate>
+	<pubDate>Sat, 17 Jun 2017 23:30:00 +0100</pubDate>
+	<item>
+		<title>Data-oriented rigid body physics</title>
+		<link>http://rasmusbarr.github.io/blog/dod-physics.html</link>
+		<guid>http://rasmusbarr.github.io/blog/dod-physics.html</guid>
+		<pubDate>Sat, 17 Jun 2017 23:30:00 +0100</pubDate>
+	</item>
 	<item>
 		<title>Realtime global illumination (part 3)</title>
 		<link>http://rasmusbarr.github.io/blog/realtimegi-pt3.html</link>
